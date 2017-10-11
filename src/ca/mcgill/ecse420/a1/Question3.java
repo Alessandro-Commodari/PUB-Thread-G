@@ -5,8 +5,7 @@ public class Question3 {
   public static void main(String[] args) throws Exception{
     
     class Philosopher implements Runnable {
-      
-      // The forks on either side of this Philosopher 
+       
       private Object Chopstick_L;
       private Object Chopstick_R;
       
@@ -30,17 +29,17 @@ public class Question3 {
           while (true) {
                
               // thinking
-              doSomething("Thinking");
+              doSomething("is thinking about his rice");
               synchronized (Chopstick_L) {
-                  doSomething("Picked up left fork");
+                  doSomething("has picked up his left chopstick");
                   synchronized (Chopstick_R) {
                       // eating
-                      doSomething("Picked up right fork - eating"); 
-                      doSomething("Put down right fork");
+                      doSomething("has picked up his right chopstick and is now eating"); 
+                      doSomething("has put down his right chopstick and has stopped eating");
                   }
                    
                   // Back to thinking
-                  doSomething("Put down left fork. Back to thinking");
+                  doSomething("has put down his left chopstick and is now thinking about rice");
               }
           }
         } catch (InterruptedException e) {
@@ -62,10 +61,10 @@ public class Question3 {
 
     //We then construct each philosopher within the array and start separate threads for each of them
     for (int i = 0; i < philosophers.length; i++) {
-        Object leftFork = chopsticks[i];
-        Object rightFork = chopsticks[(i + 1) % chopsticks.length];
+        Object Chopstick_L = chopsticks[i];
+        Object Chopstick_R = chopsticks[(i + 1) % chopsticks.length];
 
-        philosophers[i] = new Philosopher(leftFork, rightFork);
+        philosophers[i] = new Philosopher(Chopstick_L, Chopstick_R);
          
         Thread t = new Thread(philosophers[i], "Philosopher " + (i + 1));
         t.start();
