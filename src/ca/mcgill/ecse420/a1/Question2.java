@@ -30,7 +30,7 @@ public class Question2 {
       public void run() {
 
         // first thread 2 tries to get the second lock which it does
-        synchronized (l2) {
+        synchronized (l1) {
           System.out.println("Thread 2: Holding onto lock 2...");
 
           try {
@@ -39,7 +39,7 @@ public class Question2 {
           }
           System.out.println("Thread 2: Waiting for lock 1 to be free...");
           // next thread 1 tries to get the second lock which in this case won't happen
-          synchronized (l1) {
+          synchronized (l2) {
             System.out.println("Thread 2: Holding onto lock 1 and 2...");
           }
         }
