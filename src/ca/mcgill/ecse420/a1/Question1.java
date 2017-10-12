@@ -6,6 +6,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Question1 {
+  // public static double[][] pt3MatrixA = createRandomMatrix(2000, 2000);
+  // public static double[][] pt3MatrixB = createRandomMatrix(2000, 2000);
+
+
   // static variables used by the parallel matrix multiplication (shared resources)
   public static double[][] parMatrixA = createRandomMatrix(3, 3);
   public static double[][] parMatrixB = createRandomMatrix(3, 3);
@@ -123,6 +127,7 @@ public class Question1 {
     double[][] matrixA = createRandomMatrix(3, 3);
     double[][] matrixB = createRandomMatrix(3, 3);
 
+    // results for part 1 and 2 respectively
     System.out.println("Sequential Matrix A: ");
     printMatrix(matrixA);
     System.out.println("Sequential Matrix B: ");
@@ -138,5 +143,7 @@ public class Question1 {
     System.out.println("======");
     System.out.println("Parallel Result: ");
     printMatrix(parallelMultiplyMatrix(parMatrixA, parMatrixB));
+
+
   }
 }
