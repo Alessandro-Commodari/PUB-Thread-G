@@ -75,7 +75,11 @@ public class Question1 {
     return matrix;
   }
 
-  // this method takes in two matrices and performs matrix multiplication on them using
+  /*
+   * this method takes in two matrices and performs matrix multiplication on them using multiple
+   * threads and returns the modified static variable parMatrixResult.
+   */
+
   public static double[][] parallelMultiplyMatrix(double[][] a, double[][] b) {
     int rowA = a.length;
     int colA = a[0].length;
@@ -87,6 +91,12 @@ public class Question1 {
       throw new IllegalArgumentException(
           "ERROR: Matrix A's column length must be equal to matrix B's row length.");
     }
+
+    /*
+     * executor creates a threadpool with numOfThreads threads and each thread in this pool will
+     * perform a multiplication for the row associated to it. These different multiplications act on
+     * the static variable parMatrixResult.
+     */
 
     ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
     for (int i = 0; i < numOfThreads; i++) {
@@ -107,7 +117,7 @@ public class Question1 {
     return parMatrixResult;
   }
 
-  // this method goes throw the given matrix and outputs it
+  // this method goes through the given matrix and outputs it
   public static void printMatrix(double[][] matrix) {
     for (int i = 0; i < matrix.length; i++) {
       System.out.print("[");
