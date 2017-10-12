@@ -15,17 +15,17 @@ public class Question1 {
 
   // this class extends Runnable and will be used to run the parallel multiplication
   static class MatrixMultiplication implements Runnable {
-    private int start;
+    private int begin;
     private int end;
 
-    public MatrixMultiplication(int start, int end) {
-      this.start = start;
+    public MatrixMultiplication(int begin, int end) {
+      this.begin = begin;
       this.end = end;
     }
 
     @Override
     public void run() {
-      for (int i = start; i < end; i++) {
+      for (int i = begin; i < end; i++) {
         for (int j = 0; j < parMatrixB[0].length; j++) {
           for (int k = 0; k < parMatrixA[0].length; k++) {
             parMatrixResult[i][j] += (parMatrixA[i][k] * parMatrixB[k][j]);
@@ -101,11 +101,11 @@ public class Question1 {
     parMatrixResult = new double[rowA][colB];
     ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
     for (int i = 0; i < numOfThreads; i++) {
-      if (rowB % numOfThreads != 0 && i == numOfThreads - 1) {
-        executor.execute(new MatrixMultiplication(i * (rowB / numOfThreads), rowB));
+      if (rowA % numOfThreads != 0 && i == numOfThreads - 1) {
+        executor.execute(new MatrixMultiplication(i * (rowA / numOfThreads), rowA));
       } else {
         executor.execute(
-            new MatrixMultiplication(i * (rowB / numOfThreads), (i + 1) * (rowB / numOfThreads)));
+            new MatrixMultiplication(i * (rowA / numOfThreads), (i + 1) * (rowA / numOfThreads)));
       }
     }
     executor.shutdown();
