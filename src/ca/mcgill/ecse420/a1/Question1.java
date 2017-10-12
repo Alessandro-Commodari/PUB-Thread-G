@@ -6,13 +6,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class Question1 {
-  // these are for
-  public static double[][] pt3MatrixA = createRandomMatrix(2000, 2000);
-  public static double[][] pt3MatrixB = createRandomMatrix(2000, 2000);
-
   // static variables used by the parallel matrix multiplication (shared resources)
-  public static double[][] parMatrixA = createRandomMatrix(3, 3);
-  public static double[][] parMatrixB = createRandomMatrix(3, 3);
+  public static double[][] parMatrixA;
+  public static double[][] parMatrixB;
 
   public static double[][] parMatrixResult;
   public static int numOfThreads = 8;
@@ -138,7 +134,8 @@ public class Question1 {
     /* PART 1 and PART 2: This section of code will execute the code for both part 1 and part 2. */
     double[][] matrixA = createRandomMatrix(3, 3);
     double[][] matrixB = createRandomMatrix(3, 3);
-
+    parMatrixA = createRandomMatrix(3, 3);
+    parMatrixB = createRandomMatrix(3, 3);
     // results for part 1 and 2 respectively
     System.out.println("Q1 Part 1 and 2");
     System.out.println("Sequential Matrix A: ");
@@ -158,14 +155,17 @@ public class Question1 {
     printMatrix(parallelMultiplyMatrix(parMatrixA, parMatrixB));
 
     /* PART 3: the code below is for part 3 of question 1 */
+    parMatrixA = createRandomMatrix(2000, 2000);
+    parMatrixB = createRandomMatrix(2000, 2000);
+
     // sequential Multiplication
     long seqTimeStart = System.nanoTime();
-    sequentialMultiplyMatrix(pt3MatrixA, pt3MatrixB);
+    sequentialMultiplyMatrix(parMatrixA, parMatrixB);
     long seqTimeEnd = System.nanoTime();
 
     // parallel Multiplication
     long parTimeStart = System.nanoTime();
-    parallelMultiplyMatrix(pt3MatrixA, pt3MatrixB);
+    parallelMultiplyMatrix(parMatrixA, parMatrixB);
     long parTimeEnd = System.nanoTime();
 
     System.out.println("Q1 Part 3");
