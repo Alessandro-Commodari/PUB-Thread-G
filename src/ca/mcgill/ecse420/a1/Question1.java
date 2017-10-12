@@ -5,11 +5,33 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Question1_1 {
+public class Question1 {
 
-  public static double[][] matrixC = createRandomMatrix(3, 3);
-  public static double[][] matrixD = createRandomMatrix(3, 3);
-  public static int numOfThreads = 4;
+  public static double[][] parMatrixA = createRandomMatrix(4, 4);
+  public static double[][] parMatrixB = createRandomMatrix(4, 4);
+  public static double[][] parMatrixResult = new double[4][4];
+  public static int numOfThreads = 8;
+
+  static class MatrixMultiplication implements Runnable {
+    private int start;
+    private int end;
+
+    public MatrixMultiplication(int start, int end) {
+      this.start = start;
+      this.end = end;
+    }
+
+    @Override
+    public void run() {
+      for (int i = start; i < end; i++) {
+        for (int j = 0; j < parMatrixB[0].length; j++) {
+          for (int k = 0; k < parMatrixA[0].length; k++) {
+            parMatrixResult[i][j] += (parMatrixA[i][k] * parMatrixB[k][j]);
+          }
+        }
+      }
+    }
+  }
 
   public static double[][] createRandomMatrix(int rowSize, int colSize) {
     double[][] matrix = new double[rowSize][colSize];
@@ -17,7 +39,7 @@ public class Question1_1 {
     Random randNum = new Random();
     for (int i = 0; i < rowSize; i++) {
       for (int j = 0; j < colSize; j++) {
-        matrix[i][j] = Math.round(randNum.nextDouble() * 9);
+        matrix[i][j] = Math.ceil(randNum.nextDouble() * 9);
       }
     }
     return matrix;
@@ -39,7 +61,7 @@ public class Question1_1 {
     for (int i = 0; i < rowA; i++) {
       for (int j = 0; j < colB; j++) {
         for (int k = 0; k < colA; k++) {
-          matrix[i][j] = (a[i][k] * b[k][j]);
+          matrix[i][j] += (a[i][k] * b[k][j]);
         }
       }
     }
@@ -62,10 +84,11 @@ public class Question1_1 {
 
     ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
     for (int i = 0; i < numOfThreads; i++) {
-      if (size % numOfThreads != 0 && i == numOfThreads - 1) {
-        executor.execute(new Multiply(i * (size / numOfThreads), size));
+      if (4 % numOfThreads != 0 && i == numOfThreads - 1) {
+        executor.execute(new MatrixMultiplication(i * (4 / numOfThreads), 4));
       } else {
-        executor.execute(new Multiply(i * (size / numOfThreads), (i + 1) * (size / numOfThreads)));
+        executor.execute(
+            new MatrixMultiplication(i * (4 / numOfThreads), (i + 1) * (4 / numOfThreads)));
       }
     }
     executor.shutdown();
@@ -74,7 +97,6 @@ public class Question1_1 {
     } catch (InterruptedException e) {
 
     }
-
 
     return matrix;
   }
@@ -101,6 +123,13 @@ public class Question1_1 {
     System.out.println("======");
     System.out.println("Result: ");
     printMatrix(sequentialMultiplyMatrix(matrixA, matrixB));
-    // printMatrix(parallelMultiplyMatrix(matrixA, matrixB));
+    System.out.println("\n/****************/\n");
+    System.out.println("Matrix A: ");
+    printMatrix(parMatrixA);
+    System.out.println("Matrix B: ");
+    printMatrix(parMatrixB);
+    System.out.println("======");
+    System.out.println("Result: ");
+    printMatrix(parallelMultiplyMatrix(parMatrixA, parMatrixB));
   }
 }
