@@ -17,7 +17,7 @@ public class Question1_1_Filter implements Lock {
   }
 
   public void lock() {
-    int me = (int) ThreadID.get();
+    int me = ThreadID.get();
     int n = level.length;
     for (int i = 1; i < n; i++) {
       level[me] = i;
@@ -36,7 +36,7 @@ public class Question1_1_Filter implements Lock {
   }
 
   public void unlock() {
-    int me = (int) Thread.currentThread().getId();
+    int me = ThreadID.get();
     level[me] = 0;
   }
 

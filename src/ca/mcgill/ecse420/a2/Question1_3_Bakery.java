@@ -20,7 +20,7 @@ public class Question1_3_Bakery implements Lock {
 
   @Override
   public void lock() {
-    int i = (int) Thread.currentThread().getId();
+    int i = ThreadID.get();
     int n = label.length;
     flag[i] = true;
     int maxVal = -1;
@@ -31,8 +31,7 @@ public class Question1_3_Bakery implements Lock {
     }
     label[i] = maxVal + 1;
     for (int k = 0; k < n; k++) {
-      while ((k != i) && (flag[k] && (label[k]) < (label[i]))
-          || ((label[k] == label[i]) && k < i)) {
+      while ((k != i) && (flag[k] && (label[k] < label[i]) || ((label[k] == label[i]) && k < i))) {
       } ;
     }
   }
