@@ -4,11 +4,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class Question1_1_Filter implements Lock {
+public class Filter implements Lock {
   int[] level;
   int[] victim;
 
-  public Question1_1_Filter(int n) {
+  public Filter(int n) {
     level = new int[n];
     victim = new int[n];
     for (int i = 0; i < n; i++) {

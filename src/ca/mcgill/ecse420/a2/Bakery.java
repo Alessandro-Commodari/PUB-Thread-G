@@ -4,12 +4,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class Question1_3_Bakery implements Lock {
+public class Bakery implements Lock {
 
   boolean[] flag;
   int[] label;
 
-  public Question1_3_Bakery(int n) {
+  public Bakery(int n) {
     flag = new boolean[n];
     label = new int[n];
     for (int i = 0; i < n; i++) {
