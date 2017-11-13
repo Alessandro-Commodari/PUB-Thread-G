@@ -38,7 +38,7 @@ public class Question1_3_Bakery implements Lock {
 
   @Override
   public void unlock() {
-    flag[(int) Thread.currentThread().getId()] = false;
+    flag[ThreadID.get()] = false;
   }
 
 
