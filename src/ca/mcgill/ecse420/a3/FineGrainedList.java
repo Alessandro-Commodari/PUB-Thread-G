@@ -1,6 +1,6 @@
 package ca.mcgill.ecse420.a3;
 
-public class FineGrainedList<T> {
+public class FineGrainedList {
   private Node head;
 
   public FineGrainedList() {
